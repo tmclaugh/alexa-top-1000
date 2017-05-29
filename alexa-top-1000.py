@@ -1,13 +1,15 @@
 #!env python
 
 import alexa_top_1000
-
+from datetime import datetime
 
 def main(number_sites=5):
     '''
     main
     '''
+    scan_time_start = datetime.now()
     site_list = alexa_top_1000.get_top_list(number_sites)
+    scan_time_end = datetime.now()
 
     # Get sites ordered
     sorted_site_list = alexa_top_1000.sort_sites_by_words(site_list)
@@ -38,6 +40,7 @@ def main(number_sites=5):
 
     average_word_count = total_word_count / len(sorted_site_list)
     print('\nAverage Word count: {}'.format(average_word_count))
+    print('Scanned in: {}'.format((scan_time_end - scan_time_start)))
 
 
 if __name__ == '__main__':
