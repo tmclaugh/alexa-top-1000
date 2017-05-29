@@ -37,9 +37,13 @@ class Site(object):
         '''
         Get the word count and headers.
         '''
+
+        # FIXME: Do we for speed:
+        # * Just assume https?
+        # * assume www?
         url = '{}{}'.format('http://', self.name)
         try:
-            resp = requests.get(url)
+            resp = requests.get(url, timeout=5)
             soup = BeautifulSoup(resp.text, 'html.parser')
 
             # FIXME: this could be better
