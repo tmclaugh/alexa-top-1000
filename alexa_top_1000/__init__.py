@@ -1,10 +1,10 @@
 #!env python
 
 import boto3
-from bs4 import BeautifulSoup
 import io
-import requests
 import zipfile
+
+from .site import Site
 
 
 ALEXA_TOP_SITES_BUCKET = 'alexa-static'
@@ -24,43 +24,27 @@ def get_top_list(number):
     top_sites_list = []
     for line in io.BytesIO(top_sites_zip.read(ALEXA_TOP_SITES_FILE)):
         rank, site = line.decode('utf-8').strip().split(',')
-        top_sites_list.append(site)
+        top_sites_list.append(Site(site))
 
         if len(top_sites_list) == number:
             break
 
     return top_sites_list
 
-
-def get_site_first_page_data(site):
+def sort_sites_by_words(site_list):
     '''
-    given a site get the word count and headers.
-    '''
-    url = '{}{}'.format('http://', site)
-    resp = requests.get(url)
-    soup = BeautifulSoup(resp.text, 'html.parser')
-
-    # FIXME: this could be better
-    word_list = soup.get_text().split()
-
-    return {'word_count': len(word_list), 'headers': resp.headers}
-
-
-def sort_sites_by_words(site_word_data):
-    '''
-    something...
+    Return a list of site objects sorted by word count.
     '''
     sorted_site_list = []
 
-    for site in site_word_data:
-        word_count = site.get('word_count')
+    for site in site_list:
         inserted = False
         index = 0
         if not sorted_site_list:
             sorted_site_list.append(site)
         else:
             for sorted_site in sorted_site_list:
-                if word_count < sorted_site.get('word_count'):
+                if site < sorted_site:
                     sorted_site_list.insert(index, site)
                     inserted = True
                     break
