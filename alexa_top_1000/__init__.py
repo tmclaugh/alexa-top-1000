@@ -45,3 +45,31 @@ def get_site_first_page_data(site):
 
     return {'word_count': len(word_list), 'headers': resp.headers}
 
+
+def sort_sites_by_words(site_word_data):
+    '''
+    something...
+    '''
+    sorted_site_list = []
+
+    for site in site_word_data:
+        word_count = site.get('word_count')
+        inserted = False
+        index = 0
+        if not sorted_site_list:
+            sorted_site_list.append(site)
+        else:
+            for sorted_site in sorted_site_list:
+                if word_count < sorted_site.get('word_count'):
+                    sorted_site_list.insert(index, site)
+                    inserted = True
+                    break
+                else:
+                    index += 1
+
+            if not inserted:
+                sorted_site_list.append(site)
+
+    return sorted_site_list
+
+
