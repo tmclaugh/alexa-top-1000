@@ -80,7 +80,7 @@ def get_header_list(site_list):
 
     return headers
 
-def get_top_headers(headers, number=20):
+def get_top_headers(headers, number):
     '''
     Get the top header names.
     '''

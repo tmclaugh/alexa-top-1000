@@ -1,9 +1,10 @@
 #!env python
 
 import alexa_top_1000
+import argparse
 from datetime import datetime
 
-def main(number_sites=5):
+def main(number_sites, number_headers):
     '''
     main
     '''
@@ -16,7 +17,7 @@ def main(number_sites=5):
 
     # Header info.
     headers = alexa_top_1000.get_header_list(sorted_site_list)
-    top_headers = alexa_top_1000.get_top_headers(headers)
+    top_headers = alexa_top_1000.get_top_headers(headers, number_headers)
 
     rank = 1
     number_of_sites = len(sorted_site_list)
@@ -44,4 +45,19 @@ def main(number_sites=5):
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser.add_argument('-s',
+                        '--sites',
+                        dest='number_sites',
+                        type=int,
+                        default=1000,
+                        help='Number of sites')
+    parser.add_argument('-H',
+                        '--headers',
+                        dest='number_headers',
+                        type=int,
+                        default=20,
+                        help='Number of headers')
+    args = parser.parse_args()
+
+    main(args.number_sites, args.number_headers)
