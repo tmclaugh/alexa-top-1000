@@ -54,6 +54,8 @@ def sort_sites_by_words(site_list):
             if not inserted:
                 sorted_site_list.append(site)
 
+    # FIXME: I sorted these incorrectly above so reverse it here.
+    sorted_site_list.reverse()
     return sorted_site_list
 
 def get_header_list(site_list):
