@@ -75,3 +75,30 @@ def get_header_list(site_list):
 
     return headers
 
+def get_top_headers(headers, number=20):
+    '''
+    Get the top header names.
+    '''
+    sorted_headers_list = []
+
+    for header in headers.keys():
+        inserted = False
+        index = 0
+        if not sorted_headers_list:
+            sorted_headers_list.append((header, headers.get(header)))
+        else:
+            for sorted_header in sorted_headers_list:
+                if headers.get(header) < sorted_header[1]:
+                    sorted_headers_list.insert(index, (header, headers.get(header)))
+                    inserted = True
+                    break
+                else:
+                    index += 1
+
+            if not inserted:
+                sorted_headers_list.append((header, headers.get(header)))
+
+    # FIXME: I sorted these incorrectly above so reverse it here.
+    sorted_headers_list.reverse()
+    return sorted_headers_list[:number]
+
