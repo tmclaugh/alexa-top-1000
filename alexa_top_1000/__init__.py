@@ -56,4 +56,22 @@ def sort_sites_by_words(site_list):
 
     return sorted_site_list
 
+def get_header_list(site_list):
+    '''
+    Return the headers and number of times they appear from a list of site
+    objects.
+    '''
+
+    headers = {}
+    for site in site_list:
+        for header in site.headers.keys():
+            # FIXME: Necessary?
+            lc_header = header.lower()
+
+            if lc_header in headers.keys():
+                headers[lc_header] += 1
+            else:
+                headers[lc_header] = 1
+
+    return headers
 

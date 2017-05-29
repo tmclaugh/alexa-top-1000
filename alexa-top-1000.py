@@ -12,6 +12,10 @@ def main(number_sites=5):
     # Get sites ordered
     sorted_site_list = alexa_top_1000.sort_sites_by_words(site_list)
 
+    # Header info.
+    headers = alexa_top_1000.get_header_list(sorted_site_list)
+
+    # Word Count
     rank = 1
     total_word_count = 0
     for site in sorted_site_list:
