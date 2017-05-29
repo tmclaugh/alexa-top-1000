@@ -1,5 +1,8 @@
-#!env python
+'''
+alexa-top-1000
 
+The Alexa Top 1000 sites.
+'''
 import boto3
 import io
 import zipfile

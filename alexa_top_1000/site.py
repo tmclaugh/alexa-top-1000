@@ -1,5 +1,5 @@
 '''
-Alexa Site
+Alexa Site module
 '''
 
 from bs4 import BeautifulSoup
@@ -32,7 +32,7 @@ class Site(object):
 
     def _get_site_first_page_data(self):
         '''
-        given a site get the word count and headers.
+        Get the word count and headers.
         '''
         url = '{}{}'.format('http://', self.name)
         resp = requests.get(url)
