@@ -35,9 +35,12 @@ def main(number_sites, number_headers):
     total_word_count = 0
     print('\n\n==Word Count Info==')
     for site in sorted_site_list:
-        print('{}) {}'.format(rank, site))
-        total_word_count += site.word_count
-        rank += 1
+        if site.scanned:
+            print('{}) {}'.format(rank, site))
+            total_word_count += site.word_count
+            rank += 1
+        else:
+            print('{} not scanned'.format(site))
 
     average_word_count = total_word_count / len(sorted_site_list)
     print('\nAverage Word count: {}'.format(average_word_count))

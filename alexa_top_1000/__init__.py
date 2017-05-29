@@ -45,6 +45,8 @@ def sort_sites_by_words(site_list):
         index = 0
         if not sorted_site_list:
             sorted_site_list.append(site)
+        elif not site.scanned:
+            sorted_site_list.insert(0, site)
         else:
             for sorted_site in sorted_site_list:
                 if site < sorted_site:

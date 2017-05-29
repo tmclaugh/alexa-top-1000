@@ -14,7 +14,7 @@ class Site(object):
         time_start = datetime.now()
         self.name = name
 
-        self.word_list, self.headers = self._get_site_first_page_data()
+        self.word_list, self.headers, self.scanned = self._get_site_first_page_data()
         self.word_count = len(self.word_list)
         self.scan_time = datetime.now() - time_start
 
@@ -35,11 +35,18 @@ class Site(object):
         Get the word count and headers.
         '''
         url = '{}{}'.format('http://', self.name)
-        resp = requests.get(url)
-        soup = BeautifulSoup(resp.text, 'html.parser')
+        try:
+            resp = requests.get(url)
+            soup = BeautifulSoup(resp.text, 'html.parser')
 
-        # FIXME: this could be better
-        word_list = soup.get_text().split()
+            # FIXME: this could be better
+            word_list = soup.get_text().split()
+            headers = resp.headers
+            scanned = True
+        except requests.exceptions.ConnectionError as e:
+            word_list = []
+            headers = {}
+            scanned = False
 
-        return (word_list, resp.headers)
+        return (word_list, headers, scanned)
 
