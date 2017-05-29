@@ -5,10 +5,12 @@ The Alexa Top 1000 sites.
 '''
 import boto3
 import io
+import logging
 import zipfile
 
 from .site import Site
 
+_logger = logging.getLogger(__name__)
 
 ALEXA_TOP_SITES_BUCKET = 'alexa-static'
 ALEXA_TOP_SITES_KEY = 'top-1m.csv.zip'
@@ -41,6 +43,7 @@ def sort_sites_by_words(site_list):
     sorted_site_list = []
 
     for site in site_list:
+        _logger.debug('Sorting: {}'.format(site))
         inserted = False
         index = 0
         if not sorted_site_list:

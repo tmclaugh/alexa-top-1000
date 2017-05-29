@@ -3,6 +3,16 @@
 import alexa_top_1000
 import argparse
 from datetime import datetime
+import logging
+from logging.config import fileConfig
+import os.path
+
+dirname = os.path.dirname(__file__)
+logging_conf = os.path.join(dirname, 'logging.conf')
+fileConfig(logging_conf, disable_existing_loggers=False)
+if os.environ.get('DEBUG'):
+    logging.root.setLevel(level=logging.DEBUG)
+_logger = logging.getLogger(__name__)
 
 def main(number_sites, number_headers):
     '''

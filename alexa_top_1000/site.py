@@ -4,7 +4,10 @@ Alexa Site module
 
 from bs4 import BeautifulSoup
 from datetime import datetime
+import logging
 import requests
+
+_logger = logging.getLogger(__name__)
 
 class Site(object):
     '''
@@ -44,6 +47,7 @@ class Site(object):
             headers = resp.headers
             scanned = True
         except requests.exceptions.ConnectionError as e:
+            _logger.debug('Scan for {} failed: {}'.format(self.name, e))
             word_list = []
             headers = {}
             scanned = False
