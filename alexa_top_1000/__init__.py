@@ -1,7 +1,9 @@
 #!env python
 
 import boto3
+from bs4 import BeautifulSoup
 import io
+import requests
 import zipfile
 
 
@@ -28,4 +30,18 @@ def get_top_list(number):
             break
 
     return top_sites_list
+
+
+def get_site_first_page_data(site):
+    '''
+    given a site get the word count and headers.
+    '''
+    url = '{}{}'.format('http://', site)
+    resp = requests.get(url)
+    soup = BeautifulSoup(resp.text, 'html.parser')
+
+    # FIXME: this could be better
+    word_list = soup.get_text().split()
+
+    return {'word_count': len(word_list), 'headers': resp.headers}
 
