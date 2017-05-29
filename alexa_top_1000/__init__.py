@@ -29,6 +29,7 @@ def get_top_list(number):
     top_sites_list = []
     for line in io.BytesIO(top_sites_zip.read(ALEXA_TOP_SITES_FILE)):
         rank, site = line.decode('utf-8').strip().split(',')
+        _logger.debug('{}) Site: {}'.format(rank, site))
         top_sites_list.append(Site(site))
 
         if len(top_sites_list) == number:
