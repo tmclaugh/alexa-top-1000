@@ -17,7 +17,7 @@ class Site(object):
         time_start = datetime.now()
         self.name = name
 
-        self.word_list, self.headers, self.scanned = self._get_site_first_page_data()
+        self.word_list, self.headers, self.scanned, self.status_code = self._get_site_first_page_data()
         self.word_count = len(self.word_list)
         self.scan_time = datetime.now() - time_start
 
@@ -46,11 +46,13 @@ class Site(object):
             word_list = soup.get_text().split()
             headers = resp.headers
             scanned = True
+            status_code = resp.status_code
         except requests.exceptions.ConnectionError as e:
             _logger.debug('Scan for {} failed: {}'.format(self.name, e))
             word_list = []
             headers = {}
             scanned = False
+            status_code = 0 # Not a valid status code.
 
-        return (word_list, headers, scanned)
+        return (word_list, headers, scanned, status_code)
 
