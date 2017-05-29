@@ -9,7 +9,7 @@ ALEXA_TOP_SITES_BUCKET = 'alexa-static'
 ALEXA_TOP_SITES_KEY = 'top-1m.csv.zip'
 ALEXA_TOP_SITES_FILE = 'top-1m.csv'
 
-def get_top_list():
+def get_top_list(number):
     '''
     Get list of top sites from ATS S3 bucket.
     '''
@@ -23,6 +23,9 @@ def get_top_list():
     for line in io.BytesIO(top_sites_zip.read(ALEXA_TOP_SITES_FILE)):
         rank, site = line.decode('utf-8').strip().split(',')
         top_sites_list.append(site)
+
+        if len(top_sites_list) == number:
+            break
 
     return top_sites_list
 
