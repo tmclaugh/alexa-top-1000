@@ -51,7 +51,7 @@ class Site(object):
             headers = resp.headers
             scanned = True
             status_code = resp.status_code
-        except requests.exceptions.ConnectionError as e:
+        except requests.exceptions.RequestException as e:
             _logger.debug('Scan for {} failed: {}'.format(self.name, e))
             word_list = []
             headers = {}
