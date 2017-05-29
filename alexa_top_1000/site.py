@@ -43,7 +43,7 @@ class Site(object):
         # * assume www?
         url = '{}{}'.format('http://', self.name)
         try:
-            resp = requests.get(url, timeout=5)
+            resp = requests.get(url, timeout=15)
             soup = BeautifulSoup(resp.text, 'html.parser')
 
             # FIXME: this could be better
